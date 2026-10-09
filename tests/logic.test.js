@@ -14,3 +14,7 @@ test('hatch opens after docking, hero enters before door closes, cable retracts'
  assert.equal(flightFrame(flightDuration).hatch,0);assert.equal(flightFrame(flightDuration).heroOpacity,0);
  assert.deepEqual(flightFrame(1200,true),flightFrame(flightDuration));
 });
+import {heroes,nextRound} from '../logic.js';
+import {existsSync} from 'node:fs';
+test('six configured heroes have both frames, valid eyes and cable anchor',()=>{for(const r of rounds){const h=heroes[r.hero];assert.ok(h?.name);assert.equal(h.eyes.length,2);assert.ok(h.anchor[0]>0&&h.anchor[0]<650&&h.anchor[1]>0&&h.anchor[1]<563);for(const suffix of ['', '-blink'])assert.ok(existsSync(new URL(`../assets/${r.hero}${suffix}.webp`,import.meta.url)));}});
+test('complete course advances through six heroes and terminates after wolf',()=>{const visited=[];let i=0;while(i!==null){visited.push(rounds[i].hero);i=nextRound(i);assert.ok(visited.length<=6);}assert.deepEqual(visited,['cat','bear','squirrel','dog','raccoon','wolf']);});

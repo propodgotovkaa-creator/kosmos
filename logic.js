@@ -34,3 +34,13 @@ export function flightFrame(elapsed,reduced=false){
  const depth=ease((t-5700)/1100);
  return {dock,hatch:opening*(1-closing),travel,scale:1-travel*.58-depth*.22,heroOpacity:1-depth,cableOpacity:1-ease((t-6050)/650)};
 }
+
+export const heroes={
+ cat:{name:'Котёнок',anchor:[239,403],eyes:[[238,208,38,42],[322,244,42,44]]},
+ bear:{name:'Мишка',anchor:[246,370],eyes:[[270,165,27,30],[345,195,31,33]]},
+ squirrel:{name:'Белочка',anchor:[180,380],eyes:[[188,195,26,28],[266,220,31,32]]},
+ dog:{name:'Собака',anchor:[238,368],eyes:[[272,148,27,31],[347,177,32,33]]},
+ raccoon:{name:'Енот',anchor:[235,366],eyes:[[267,173,29,31],[340,199,30,32]]},
+ wolf:{name:'Волчонок',anchor:[231,367],eyes:[[241,168,26,30],[310,192,30,32]]}
+};
+export function nextRound(index){return index+1<rounds.length?index+1:null;}
