@@ -1,4 +1,5 @@
-import {vocabulary,courses,roundsFor,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=9';
+import {playSound} from './audio.js?v=10';
+import {vocabulary,courses,roundsFor,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=10';
 const $=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
 const buttons=[];let phase='menu',sequence=[],progress=0,run=0,ready=false,sound=true,audio,hiddenAt=0;
 let roundIndex=0,enterStart=0;const previousSequences={};
@@ -43,8 +44,7 @@ function clearCards(){buttons.forEach(b=>b.classList.remove('lit','correct','wro
 function tone(kind,index=0){
  if(!sound)return;
  try{audio??=new(window.AudioContext||window.webkitAudioContext)();audio.resume();
- const start=audio.currentTime,notes=kind==='success'?[523,659,784]:[kind==='error'?220:kind==='dock'?392:[440,494,554,659][index%4]];
- notes.forEach((f,i)=>{const o=audio.createOscillator(),g=audio.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(audio.destination);const t=start+i*.13;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(kind==='error'?.025:.055,t+.025);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.24);});
+ playSound(audio,kind,index);
  }catch{/* The visual game works even when browser audio is unavailable. */}
 }
 const delay=ms=>new Promise(resolve=>{
