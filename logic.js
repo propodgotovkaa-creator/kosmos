@@ -48,5 +48,5 @@ export function nextRound(index){return index+1<rounds.length?index+1:null;}
 // Align with the socket axis before sliding the nose behind its front rim.
 export function connectorFrame(dock){
  const approach=ease(dock/.62),insert=ease((dock-.62)/.38);
- return {x:970-44*approach-160*insert,y:326-26*approach,insert};
+ return {x:970-44*approach-190*insert,y:326-26*approach,insert};
 }

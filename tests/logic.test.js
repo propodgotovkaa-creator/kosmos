@@ -27,3 +27,12 @@ test('connector aligns first, inserts behind socket rim, stays seated during fli
  assert.equal(seated.insert,1);
  for(const t of [1900,3000,5000,6900,8200])assert.deepEqual(connectorFrame(flightFrame(t).dock),seated);
 });
+
+import {readFileSync} from 'node:fs';
+test('only plug is cropped at socket mouth; hero renders above connector and indicators',()=>{
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ assert.ok(html.indexOf('id="hero-group"')>html.indexOf('id="indicator"'));
+ assert.ok(html.includes('id="plug-layer" clip-path="url(#plugOutsideSocket)"'));
+ assert.ok(!html.includes('id="socket-front"'));
+ const seated=connectorFrame(1);assert.ok(seated.x+70<842);assert.ok(seated.x+170>842);
+});

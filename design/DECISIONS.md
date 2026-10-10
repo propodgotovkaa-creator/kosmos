@@ -29,3 +29,6 @@
 ## Станция с боковым гнездом
 Рабочий фон `assets/scene-v2.webp` перерисован встроенным image_gen. Заменены сам разъём станции и монтажная панель. Горизонтальная ось y=300; наконечник входит справа налево и скрывается под стенкой гнезда. Передний слой ограничен силуэтом крепления.
 Промпт: Redraw the station small tether socket and mounting panel as a compact horizontal receiving sleeve pointing directly right in perfect side elevation. Cream and mint housing, side guide grooves, small green status light. Receiving mouth at the far right edge, seen edge-on; no frontal concentric circular rings. Preserve the hatch, station, Earth, stars, moon and composition. Empty sleeve with no cable or plug. Same soft illustrated style.
+
+## Слои стыковки
+Вместо накладки фона наконечник обрезается у входа x=842. Вставка углублена до 190 единиц. Герой рисуется последним, перед разъёмом, тросом и индикаторами. Проверен пролёт мишки перед креплением.
