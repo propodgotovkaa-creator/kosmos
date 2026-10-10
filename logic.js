@@ -1,7 +1,32 @@
 export const vocabulary = [
  ['dog','Собака',1,0],['bag','Сумка',1,1],['juice','Сок',1,2],['boots','Сапоги',1,3],
  ['honeycomb','Соты',2,0],['owl','Сова',2,1],['lettuce','Салат',2,2],['scooter','Самокат',2,3],
- ['plane','Самолёт',3,0],['sled','Санки',3,1],['dustpan','Совок',3,2],['chest','Сундук',3,3]
+ ['plane','Самолёт',3,0],['sled','Санки',3,1],['dustpan','Совок',3,2],['chest','Сундук',3,3],
+ ["fox", "Лиса", 4, 0],
+ ["wasp", "Оса", 4, 1],
+ ["moustache", "Усы", 4, 2],
+ ["scythe", "Коса", 4, 3],
+ ["sock", "Носок", 5, 0],
+ ["sand", "Песок", 5, 1],
+ ["beads", "Бусы", 5, 2],
+ ["scales", "Весы", 5, 3],
+ ["dishes", "Посуда", 6, 0],
+ ["nose", "Нос", 6, 1],
+ ["coconut", "Кокос", 6, 2],
+ ["cactus", "Кактус", 6, 3],
+ ["tray", "Поднос", 7, 0],
+ ["bus", "Автобус", 7, 1],
+ ["pineapple", "Ананас", 7, 2],
+ ["compass", "Компас", 7, 3],
+ ["vacuum", "Пылесос", 8, 0],
+ ["glass", "Стакан", 8, 1],
+ ["mask", "Маска", 8, 2],
+ ["cabbage", "Капуста", 8, 3],
+ ["hardhat", "Каска", 9, 0],
+ ["table", "Стол", 9, 1],
+ ["garlic", "Чеснок", 9, 2],
+ ["foxtail", "Хвост", 9, 3],
+ ["chair", "Стул", 10, 0]
 ].map(([id,label,sheet,cell])=>({id,label,sheet,cell}));
 export const rounds = [
  {hero:'cat',cards:['dog','bag','juice','boots']},
@@ -49,4 +74,17 @@ export function nextRound(index){return index+1<rounds.length?index+1:null;}
 export function connectorFrame(dock){
  const approach=ease(dock/.62),insert=ease((dock-.62)/.38);
  return {x:970-44*approach-190*insert,y:326-26*approach,insert};
+}
+
+export const courses=[
+ {id:'initial',label:'С в начале',example:'Собака · сумка · сок',words:rounds.slice(0,3).flatMap(r=>r.cards)},
+ {id:'middle',label:'С в середине',example:'Лиса · усы · бусы',words:['fox','wasp','moustache','scythe','sock','sand','beads','scales','dishes']},
+ {id:'final',label:'С в конце',example:'Нос · кокос · ананас',words:['nose','coconut','cactus','tray','bus','pineapple','compass','vacuum']},
+ {id:'cluster',label:'С в стечениях',example:'Стакан · маска · стул',words:['glass','mask','cabbage','hardhat','table','garlic','foxtail','chair']}
+];
+export function roundsFor(courseId){
+ const course=courses.find(c=>c.id===courseId);
+ if(!course)throw new Error('Unknown course');
+ if(courseId==='initial')return rounds.map(r=>({...r,cards:[...r.cards]}));
+ return rounds.map((r,i)=>({hero:r.hero,cards:Array.from({length:4},(_,j)=>course.words[(i*4+j)%course.words.length])}));
 }

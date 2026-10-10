@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#061127"><title>Космическая стыковка · Звук С</title>
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <main id="game" aria-label="Космическая стыковка">
@@ -23,9 +23,9 @@
  <section class="sr-only" aria-live="polite" aria-atomic="true"><h1 id="instruction">Поможем котёнку?</h1><p id="hint">Запомни картинки и подключи трос к кораблю.</p></section>
  <div class="cards" id="cards" aria-label="Картинки шифра"></div>
  <footer><span id="progress" class="sr-only" role="status"></span><button id="repeat" class="secondary" disabled><span aria-hidden="true">↻</span> Показать ещё раз</button></footer>
- <section class="overlay" id="welcome" aria-labelledby="welcome-title"><div class="dialog"><span class="tag">ШЕСТЬ КОСМИЧЕСКИХ ДРУЗЕЙ</span><h2 id="welcome-title">Поможем<br>космонавтам?</h2><p>Посмотри, как загораются картинки.<br>Назови их и повтори порядок.<br>Четыре огонька помогут подключить трос.</p><button id="start" class="primary" disabled>Готовим полёт…</button><span class="note">Спаси всех шестерых друзей</span></div></section>
+ <section class="overlay course-overlay" id="welcome" aria-labelledby="welcome-title"><div class="dialog course-dialog"><span class="tag">КОСМИЧЕСКИЕ ДРУЗЬЯ</span><h2 id="welcome-title">Выбери раунд</h2><div id="course-options" role="group" aria-label="Положение звука С"></div><p class="course-instructions">Запомни картинки, назови их и повтори порядок.<br>Четыре огонька подключат трос и помогут герою вернуться домой.</p><button id="start" class="primary" disabled>Готовим полёт…</button></div></section>
  <section class="overlay final-overlay" id="success" hidden aria-labelledby="success-title"><div class="dialog success-dialog"><span class="tag">ВСЕ ШЕСТЕРО ДОМА</span><h2 id="success-title">Отличная работа!</h2><p>Все космонавты в безопасности!</p><div id="rescued-team" class="rescued-team" aria-label="Шесть спасённых космонавтов"></div><div class="final-actions"><button id="again" class="primary">Играть ещё</button><button id="to-menu" class="text-button">В меню</button></div></div></section>
  <div id="load-error" hidden role="alert">Не удалось загрузить картинки. <button id="reload">Попробовать ещё раз</button></div>
 </main>
-<script type="module" src="game.js?v=7"></script>
+<script type="module" src="game.js?v=8"></script>
 </body></html>

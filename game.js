@@ -1,13 +1,14 @@
-import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=7';
+import {vocabulary,courses,roundsFor,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=8';
 const $=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
 const buttons=[];let phase='menu',sequence=[],progress=0,run=0,ready=false,sound=true,audio,hiddenAt=0;
-let roundIndex=0,enterStart=0;const previousSequences=[];
+let roundIndex=0,enterStart=0;const previousSequences={};
+let courseId='initial',rounds=roundsFor(courseId);
 let dockStart=0,dock=0,nextBlink=performance.now()+3500,blinkUntil=0;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const lampEls=[];
 for(let i=0;i<4;i++){const c=document.createElementNS(ns,'circle');c.setAttribute('cx',-75+i*50);c.setAttribute('cy',-3);c.setAttribute('r',16);c.classList.add('lamp');$('lamps').append(c);lampEls.push(c);}
 function renderRound(index){
- roundIndex=index;const round=rounds[index],hero=heroes[round.hero];
+ roundIndex=index;$('game').dataset.course=courseId;const round=rounds[index],hero=heroes[round.hero];
  $('game').dataset.round=String(index+1);$('game').dataset.hero=round.hero;
  $('hero-art').setAttribute('href',`assets/${round.hero}.webp`);
  $('blink').setAttribute('href',`assets/${round.hero}-blink.webp`);
@@ -24,6 +25,16 @@ function renderRound(index){
 }
 for(const [i,round] of rounds.entries()){
  const img=document.createElement('img');img.src=`assets/${round.hero}.webp`;img.alt=heroes[round.hero].name;img.style.setProperty('--delay',`${-i*.6}s`);$('rescued-team').append(img);
+}
+for(const course of courses){
+ const b=document.createElement('button');b.className='course-choice';b.dataset.course=course.id;
+ b.setAttribute('aria-pressed',String(course.id===courseId));
+ const title=document.createElement('strong');title.textContent=course.label;
+ const example=document.createElement('span');example.textContent=course.example;b.append(title,example);
+ b.addEventListener('click',()=>{if(phase!=='menu')return;courseId=course.id;rounds=roundsFor(courseId);renderRound(0);controls();
+ for(const option of $('course-options').children)option.setAttribute('aria-pressed',String(option===b));
+
+ });$('course-options').append(b);
 }
 function lamps(){lampEls.forEach((l,i)=>l.classList.toggle('on',i<progress));$('progress').textContent=`Огоньки: ${progress} из 4`;}
 function message(title,hint){$('instruction').textContent=title;$('hint').textContent=hint;}
@@ -79,7 +90,7 @@ async function beginRound(index){
  const token=++run;phase='transition';controls();$('welcome').hidden=true;$('success').hidden=true;$('cards').classList.add('changing');
  if(index>0){await delay(450);if(token!==run)return;}
  renderRound(index);enterStart=performance.now();
- sequence=makeSequence(rounds[index].cards,previousSequences[index]||[]);previousSequences[index]=[...sequence];
+ sequence=makeSequence(rounds[index].cards,previousSequences[courseId+index]||[]);previousSequences[courseId+index]=[...sequence];
  message(`На связи — ${heroes[rounds[index].hero].name.toLowerCase()}`,'Запомни новый шифр.');
  await delay(reduced?200:900);if(token!==run)return;$('cards').classList.remove('changing');
  await delay(350);if(token!==run)return;demonstrate();
@@ -130,4 +141,4 @@ function animate(now){
  requestAnimationFrame(animate);
 }
 renderRound(0);controls();requestAnimationFrame(animate);
-Promise.all(['scene-v2','scene-open','plug-v2','cards-1','cards-2','cards-3',...rounds.flatMap(r=>[r.hero,r.hero+'-blink'])].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve();img.onerror=reject;img.src=`assets/${name}.webp`;}))).then(()=>{ready=true;$('start').disabled=false;$('start').textContent='Начать полёт';}).catch(()=>{$('load-error').hidden=false;});
+Promise.all(['scene-v2','scene-open','plug-v2',...new Set(vocabulary.map(v=>'cards-'+v.sheet)),...rounds.flatMap(r=>[r.hero,r.hero+'-blink'])].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve();img.onerror=reject;img.src=`assets/${name}.webp`;}))).then(()=>{ready=true;$('start').disabled=false;$('start').textContent='Начать полёт';}).catch(()=>{$('load-error').hidden=false;});

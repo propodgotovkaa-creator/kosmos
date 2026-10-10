@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {vocabulary,rounds,makeSequence,answer} from '../logic.js';
-test('six unique heroes; all 12 words occur exactly twice, without duplicates within round',()=>{assert.equal(new Set(rounds.map(r=>r.hero)).size,6);const counts=new Map(vocabulary.map(v=>[v.id,0]));for(const r of rounds){assert.equal(r.cards.length,4);assert.equal(new Set(r.cards).size,4);for(const id of r.cards){assert.ok(counts.has(id));counts.set(id,counts.get(id)+1);}}for(const n of counts.values())assert.equal(n,2);assert.equal(new Set(rounds.slice(0,3).flatMap(r=>r.cards)).size,12);});
+test('six unique heroes; all 12 words occur exactly twice, without duplicates within round',()=>{assert.equal(new Set(rounds.map(r=>r.hero)).size,6);const counts=new Map(vocabulary.filter(v=>v.sheet<=3).map(v=>[v.id,0]));for(const r of rounds){assert.equal(r.cards.length,4);assert.equal(new Set(r.cards).size,4);for(const id of r.cards){assert.ok(counts.has(id));counts.set(id,counts.get(id)+1);}}for(const n of counts.values())assert.equal(n,2);assert.equal(new Set(rounds.slice(0,3).flatMap(r=>r.cards)).size,12);});
 test('shuffle is a permutation, does not change cards, avoids previous sequence',()=>{const cards=rounds[0].cards,copy=[...cards];for(let n=0;n<50;n++){const next=makeSequence(cards,cards,()=>.9999);assert.deepEqual([...next].sort(),[...cards].sort());assert.notDeepEqual(next,cards);}assert.deepEqual(cards,copy);});
 test('each correct answer lights one lamp; docking only on fourth',()=>{const seq=rounds[0].cards;let p=0;for(let i=0;i<4;i++){const a=answer(seq,p,seq[i]);p=a.progress;assert.equal(p,i+1);assert.equal(a.kind,i===3?'complete':'correct');}assert.deepEqual(answer(seq,p,'dog'),{progress:4,kind:'complete'});});
 test('wrong or repeated picture resets progress; correct sequence can restart',()=>{const s=rounds[0].cards;assert.deepEqual(answer(s,2,s[0]),{progress:0,kind:'wrong'});assert.deepEqual(answer(s,0,s[0]),{progress:1,kind:'correct'});assert.deepEqual(answer(s,1,s[0]),{progress:0,kind:'wrong'});});
@@ -35,4 +35,17 @@ test('only plug is cropped at socket mouth; hero renders above connector and ind
  assert.ok(html.includes('id="plug-layer" clip-path="url(#plugOutsideSocket)"'));
  assert.ok(!html.includes('id="socket-front"'));
  const seated=connectorFrame(1);assert.ok(seated.x+70<842);assert.ok(seated.x+170>842);
+});
+
+import {courses,roundsFor} from '../logic.js';
+test('four courses contain exact word counts; all words covered in six hero rounds',()=>{
+ assert.deepEqual(courses.map(c=>c.words.length),[12,9,8,8]);
+ const all=new Set(vocabulary.map(v=>v.id));assert.equal(all.size,37);
+ for(const c of courses){const rs=roundsFor(c.id);assert.equal(rs.length,6);
+ const used=new Set();for(const r of rs){assert.equal(new Set(r.cards).size,4);for(const id of r.cards){assert.ok(c.words.includes(id));assert.ok(all.has(id));used.add(id);}}
+ assert.deepEqual([...used].sort(),[...c.words].sort());
+ assert.deepEqual(rs.map(r=>r.hero),rounds.map(r=>r.hero));
+ }
+ for(const v of vocabulary)assert.ok(existsSync(new URL(`../assets/cards-${v.sheet}.webp`,import.meta.url)));
+ assert.throws(()=>roundsFor('missing'));
 });
