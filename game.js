@@ -1,4 +1,4 @@
-import {vocabulary,courses,roundsFor,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=8';
+import {vocabulary,courses,roundsFor,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=9';
 const $=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
 const buttons=[];let phase='menu',sequence=[],progress=0,run=0,ready=false,sound=true,audio,hiddenAt=0;
 let roundIndex=0,enterStart=0;const previousSequences={};
@@ -99,8 +99,6 @@ function menu(){++run;phase='menu';enterStart=0;renderRound(0);clearCards();cont
 function start(){if(!ready)return;tone('note',0);beginRound(0);}
 $('start').addEventListener('click',start);$('again').addEventListener('click',start);$('repeat').addEventListener('click',demonstrate);$('home').addEventListener('click',menu);$('to-menu').addEventListener('click',menu);
 $('sound').addEventListener('click',()=>{sound=!sound;$('sound').setAttribute('aria-pressed',String(sound));$('sound').setAttribute('aria-label',sound?'Выключить звук':'Включить звук');if(sound)tone('note');});
-$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{$('fullscreen').hidden=true;}});
-if(!document.fullscreenEnabled)$('fullscreen').hidden=true;
 $('reload').addEventListener('click',()=>location.reload());
 document.addEventListener('keydown',e=>{if(e.repeat)return;if(phase==='input'&&/^[1-4]$/.test(e.key)){e.preventDefault();buttons[+e.key-1].click();}if(e.key==='Escape'&&phase!=='menu')menu();});
 document.addEventListener('visibilitychange',()=>{
