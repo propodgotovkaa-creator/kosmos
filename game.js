@@ -1,4 +1,4 @@
-import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=5';
+import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=6';
 const $=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
 const buttons=[];let phase='menu',sequence=[],progress=0,run=0,ready=false,sound=true,audio,hiddenAt=0;
 let roundIndex=0,enterStart=0;const previousSequences=[];
@@ -130,4 +130,4 @@ function animate(now){
  requestAnimationFrame(animate);
 }
 renderRound(0);controls();requestAnimationFrame(animate);
-Promise.all(['scene','scene-open','plug-v2','cards-1','cards-2','cards-3',...rounds.flatMap(r=>[r.hero,r.hero+'-blink'])].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve();img.onerror=reject;img.src=`assets/${name}.webp`;}))).then(()=>{ready=true;$('start').disabled=false;$('start').textContent='Начать полёт';}).catch(()=>{$('load-error').hidden=false;});
+Promise.all(['scene-v2','scene-open','plug-v2','cards-1','cards-2','cards-3',...rounds.flatMap(r=>[r.hero,r.hero+'-blink'])].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve();img.onerror=reject;img.src=`assets/${name}.webp`;}))).then(()=>{ready=true;$('start').disabled=false;$('start').textContent='Начать полёт';}).catch(()=>{$('load-error').hidden=false;});

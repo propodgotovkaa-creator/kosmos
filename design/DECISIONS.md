@@ -25,3 +25,7 @@
 ## Перерисованный наконечник
 Создан встроенным image_gen; рабочий файл `assets/plug-v2.webp`. Вставляемая часть задвигается на 90 единиц SVG; старый открытый ободок удалён из дизайна.
 Промпт: Redesign the spacecraft tether plug as a male insertion connector on a transparent background. Perfect horizontal side profile, narrow long solid silver tongue pointing left with two lengthwise guide grooves; compact cream housing and mint rear strain relief to the right. No hollow front opening or front-facing rim. Preserve the soft illustrated style. All parts coaxial. No cable, station, text or background.
+
+## Станция с боковым гнездом
+Рабочий фон `assets/scene-v2.webp` перерисован встроенным image_gen. Заменены сам разъём станции и монтажная панель. Горизонтальная ось y=300; наконечник входит справа налево и скрывается под стенкой гнезда. Передний слой ограничен силуэтом крепления.
+Промпт: Redraw the station small tether socket and mounting panel as a compact horizontal receiving sleeve pointing directly right in perfect side elevation. Cream and mint housing, side guide grooves, small green status light. Receiving mouth at the far right edge, seen edge-on; no frontal concentric circular rings. Preserve the hatch, station, Earth, stars, moon and composition. Empty sleeve with no cable or plug. Same soft illustrated style.

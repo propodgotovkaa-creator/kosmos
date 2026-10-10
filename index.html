@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#061127"><title>Космическая стыковка · Звук С</title>
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <main id="game" aria-label="Космическая стыковка">
- <img class="scene" src="assets/scene.webp" alt="Космический корабль с люком слева, Земля и звёзды" draggable="false">
+ <img class="scene" src="assets/scene-v2.webp" alt="Космический корабль с люком слева, Земля и звёзды" draggable="false">
  <header><div class="toolbar"><button id="home" class="tool" aria-label="В меню" title="В меню">⌂</button><button id="sound" class="tool" aria-label="Выключить звук" aria-pressed="true" title="Звук"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 12h6l7-6v20l-7-6H4zM22 11q6 5 0 10M25 6q11 10 0 20"/></svg></button><button id="fullscreen" class="tool" aria-label="На весь экран" title="На весь экран"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 12V4h8M20 4h8v8M28 20v8h-8M12 28H4v-8"/></svg></button></div></header>
  <svg id="space" viewBox="0 0 1920 1080" aria-hidden="true">
-  <defs><linearGradient id="cableLight" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".5" stop-color="#cbd1db"/><stop offset="1" stop-color="#737e9b"/></linearGradient><linearGradient id="panelLight" x2="0" y2="1"><stop stop-color="#e6eee9"/><stop offset="1" stop-color="#81939b"/></linearGradient><radialGradient id="dockLight"><stop stop-color="#fcffd3" stop-opacity=".9"/><stop offset=".3" stop-color="#adffdb" stop-opacity=".65"/><stop offset="1" stop-color="#75fbd5" stop-opacity="0"/></radialGradient><clipPath id="hatchClip"><ellipse cx="400" cy="255" rx="197" ry="231"/></clipPath><clipPath id="socketRimClip"><path clip-rule="evenodd" d="M620 230H741C777 230 777 360 741 360H620Z M742 262A17 38 0 1 0 742 338A17 38 0 1 0 742 262Z"/></clipPath><clipPath id="eyesClip"><ellipse cx="238" cy="208" rx="38" ry="42"/><ellipse cx="322" cy="244" rx="42" ry="44"/></clipPath></defs>
-  <image id="open-hatch" href="assets/scene-open.webp" width="1920" height="1080" clip-path="url(#hatchClip)" opacity="0"/><g id="hatch-door"><g clip-path="url(#hatchClip)"><image href="assets/scene.webp" width="1920" height="1080"/></g></g>
-  <circle id="dock-glow" cx="740" cy="302" r="108" fill="url(#dockLight)" opacity="0"/>
+  <defs><linearGradient id="cableLight" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".5" stop-color="#cbd1db"/><stop offset="1" stop-color="#737e9b"/></linearGradient><linearGradient id="panelLight" x2="0" y2="1"><stop stop-color="#e6eee9"/><stop offset="1" stop-color="#81939b"/></linearGradient><radialGradient id="dockLight"><stop stop-color="#fcffd3" stop-opacity=".9"/><stop offset=".3" stop-color="#adffdb" stop-opacity=".65"/><stop offset="1" stop-color="#75fbd5" stop-opacity="0"/></radialGradient><clipPath id="hatchClip"><ellipse cx="400" cy="255" rx="197" ry="231"/></clipPath><clipPath id="socketRimClip"><path d="M715 242Q715 220 695 219Q674 218 674 248V348Q674 382 697 379L716 360H832Q849 360 849 345V260Q849 242 832 242Z"/></clipPath><clipPath id="eyesClip"><ellipse cx="238" cy="208" rx="38" ry="42"/><ellipse cx="322" cy="244" rx="42" ry="44"/></clipPath></defs>
+  <image id="open-hatch" href="assets/scene-open.webp" width="1920" height="1080" clip-path="url(#hatchClip)" opacity="0"/><g id="hatch-door"><g clip-path="url(#hatchClip)"><image href="assets/scene-v2.webp" width="1920" height="1080"/></g></g>
+  <circle id="dock-glow" cx="839" cy="300" r="108" fill="url(#dockLight)" opacity="0"/>
   <path id="cable-shadow" fill="none" stroke="#334763" stroke-width="17" stroke-linecap="round"/>
   <path id="cable" fill="none" stroke="url(#cableLight)" stroke-width="12" stroke-linecap="round"/>
   <path id="cable-rib" fill="none" stroke="#fff4db" stroke-opacity=".25" stroke-width="11" stroke-dasharray="2 6"/>
   <g id="hero-group"><image id="hero-art" href="assets/cat.webp" width="650" height="563"/><image id="blink" href="assets/cat-blink.webp" width="650" height="563" clip-path="url(#eyesClip)" opacity="0"/></g>
   <image id="plug" href="assets/plug-v2.webp" width="260" height="173"/>
-  <image id="socket-front" href="assets/scene.webp" width="1920" height="1080" clip-path="url(#socketRimClip)"/>
+  <image id="socket-front" href="assets/scene-v2.webp" width="1920" height="1080" clip-path="url(#socketRimClip)"/>
   <g id="indicator"><rect x="-107" y="-35" width="214" height="70" rx="24" fill="#526675"/><rect x="-105" y="-37" width="210" height="67" rx="23" fill="url(#panelLight)" stroke="#f1ecdf" stroke-width="3"/><g id="lamps"></g></g>
  </svg>
  <section class="sr-only" aria-live="polite" aria-atomic="true"><h1 id="instruction">Поможем котёнку?</h1><p id="hint">Запомни картинки и подключи трос к кораблю.</p></section>
@@ -28,5 +28,5 @@
  <section class="overlay final-overlay" id="success" hidden aria-labelledby="success-title"><div class="dialog success-dialog"><span class="tag">ВСЕ ШЕСТЕРО ДОМА</span><h2 id="success-title">Отличная работа!</h2><p>Все космонавты в безопасности!</p><div id="rescued-team" class="rescued-team" aria-label="Шесть спасённых космонавтов"></div><div class="final-actions"><button id="again" class="primary">Играть ещё</button><button id="to-menu" class="text-button">В меню</button></div></div></section>
  <div id="load-error" hidden role="alert">Не удалось загрузить картинки. <button id="reload">Попробовать ещё раз</button></div>
 </main>
-<script type="module" src="game.js?v=5"></script>
+<script type="module" src="game.js?v=6"></script>
 </body></html>
