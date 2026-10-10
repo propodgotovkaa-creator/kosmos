@@ -1,4 +1,4 @@
-import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=4';
+import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=5';
 const $=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
 const buttons=[];let phase='menu',sequence=[],progress=0,run=0,ready=false,sound=true,audio,hiddenAt=0;
 let roundIndex=0,enterStart=0;const previousSequences=[];
@@ -118,8 +118,8 @@ function animate(now){
  const anchor=heroes[rounds[roundIndex].hero].anchor;
  const connection=connectorFrame(f.dock);
  const x=tx+anchor[0]*scale,y=ty+anchor[1]*scale,px=connection.x,py=connection.y+(1-Math.min(1,f.dock/.62))*floatY*.4;
- $('plug').setAttribute('opacity',arrive);$('plug').setAttribute('x',px-34);$('plug').setAttribute('y',py-63.5);
- const rear=px+121,sag=1-f.travel;
+ $('plug').setAttribute('opacity',arrive);$('plug').setAttribute('x',px-64);$('plug').setAttribute('y',py-86.5);
+ const rear=px+170,sag=1-f.travel;
  const c1x=rear+(x-rear)*.3,c1y=py+85*sag,c2x=x-(x-rear)*.25,c2y=y+115*sag;
  const path=`M ${rear} ${py} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x} ${y}`;
  for(const id of ['cable-shadow','cable','cable-rib']){$(id).setAttribute('d',path);$(id).setAttribute('opacity',f.cableOpacity*arrive);}
@@ -130,4 +130,4 @@ function animate(now){
  requestAnimationFrame(animate);
 }
 renderRound(0);controls();requestAnimationFrame(animate);
-Promise.all(['scene','scene-open','plug','cards-1','cards-2','cards-3',...rounds.flatMap(r=>[r.hero,r.hero+'-blink'])].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve();img.onerror=reject;img.src=`assets/${name}.webp`;}))).then(()=>{ready=true;$('start').disabled=false;$('start').textContent='Начать полёт';}).catch(()=>{$('load-error').hidden=false;});
+Promise.all(['scene','scene-open','plug-v2','cards-1','cards-2','cards-3',...rounds.flatMap(r=>[r.hero,r.hero+'-blink'])].map(name=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve();img.onerror=reject;img.src=`assets/${name}.webp`;}))).then(()=>{ready=true;$('start').disabled=false;$('start').textContent='Начать полёт';}).catch(()=>{$('load-error').hidden=false;});
