@@ -18,3 +18,12 @@ import {heroes,nextRound} from '../logic.js';
 import {existsSync} from 'node:fs';
 test('six configured heroes have both frames, valid eyes and cable anchor',()=>{for(const r of rounds){const h=heroes[r.hero];assert.ok(h?.name);assert.equal(h.eyes.length,2);assert.ok(h.anchor[0]>0&&h.anchor[0]<650&&h.anchor[1]>0&&h.anchor[1]<563);for(const suffix of ['', '-blink'])assert.ok(existsSync(new URL(`../assets/${r.hero}${suffix}.webp`,import.meta.url)));}});
 test('complete course advances through six heroes and terminates after wolf',()=>{const visited=[];let i=0;while(i!==null){visited.push(rounds[i].hero);i=nextRound(i);assert.ok(visited.length<=6);}assert.deepEqual(visited,['cat','bear','squirrel','dog','raccoon','wolf']);});
+
+import {connectorFrame} from '../logic.js';
+test('connector aligns first, inserts behind socket rim, stays seated during flight',()=>{
+ const aligned=connectorFrame(.62),seated=connectorFrame(1);
+ assert.equal(aligned.y,300);assert.equal(aligned.insert,0);
+ assert.equal(seated.y,aligned.y);assert.ok(seated.x<aligned.x-60);
+ assert.equal(seated.insert,1);
+ for(const t of [1900,3000,5000,6900,8200])assert.deepEqual(connectorFrame(flightFrame(t).dock),seated);
+});

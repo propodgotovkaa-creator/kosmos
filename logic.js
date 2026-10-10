@@ -44,3 +44,9 @@ export const heroes={
  wolf:{name:'Волчонок',anchor:[231,367],eyes:[[241,168,26,30],[310,192,30,32]]}
 };
 export function nextRound(index){return index+1<rounds.length?index+1:null;}
+
+// Align with the socket axis before sliding the nose behind its front rim.
+export function connectorFrame(dock){
+ const approach=ease(dock/.62),insert=ease((dock-.62)/.38);
+ return {x:843-69*approach-70*insert,y:326-26*approach,insert};
+}

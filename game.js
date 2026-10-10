@@ -1,4 +1,4 @@
-import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound} from './logic.js?v=3';
+import {vocabulary,rounds,makeSequence,answer,flightFrame,flightDuration,heroes,nextRound,connectorFrame} from './logic.js?v=4';
 const $=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
 const buttons=[];let phase='menu',sequence=[],progress=0,run=0,ready=false,sound=true,audio,hiddenAt=0;
 let roundIndex=0,enterStart=0;const previousSequences=[];
@@ -116,7 +116,8 @@ function animate(now){
  $('hatch-door').setAttribute('transform',`translate(190 0) scale(${Math.max(.01,1-f.hatch)} 1) translate(-190 0)`);
  $('hatch-door').setAttribute('opacity',1-Math.max(0,(f.hatch-.85)/.15));
  const anchor=heroes[rounds[roundIndex].hero].anchor;
- const x=tx+anchor[0]*scale,y=ty+anchor[1]*scale,px=843+(740-843)*f.dock,py=326+(302-326)*f.dock+(1-f.dock)*floatY*.4;
+ const connection=connectorFrame(f.dock);
+ const x=tx+anchor[0]*scale,y=ty+anchor[1]*scale,px=connection.x,py=connection.y+(1-Math.min(1,f.dock/.62))*floatY*.4;
  $('plug').setAttribute('opacity',arrive);$('plug').setAttribute('x',px-34);$('plug').setAttribute('y',py-63.5);
  const rear=px+121,sag=1-f.travel;
  const c1x=rear+(x-rear)*.3,c1y=py+85*sag,c2x=x-(x-rear)*.25,c2y=y+115*sag;
